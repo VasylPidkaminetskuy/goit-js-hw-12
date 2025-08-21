@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export function getImagesByQuery(query, page = 1) {
-  return axios
-    .get('https://pixabay.com/api/', {
+export async function getImagesByQuery(query, page = 1) {
+  try {
+    const response = await axios.get('https://pixabay.com/api/', {
       params: {
         key: '51852329-0f9f7a5b812c170a88122fd74',
         q: query,
@@ -12,10 +12,10 @@ export function getImagesByQuery(query, page = 1) {
         page: page,
         per_page: 15,
       },
-    })
-    .then(res => res.data)
-    .catch(error => {
-      console.error('Error fetching images:', error);
-      throw error;
     });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    throw error;
+  }
 }
